@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XEN Litepaper</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 </head>
 <body>
@@ -17,17 +18,19 @@
         <main id="content">
             <section id="general">
                 <h2>General</h2>
-                <p><strong>What is the mission of XEN?</strong> XEN aims to become a community-building crypto asset that connects like-minded people together...</p>
-                <p><strong>What problem does XEN solve?</strong> Today's crypto world exists on a very bipolar plane...</p>
+                <p><strong>Mission:</strong> XEN aims to be a community-building crypto asset uniting crypto enthusiasts with the lowest entry barrier (p. 2). Designed by the Fair Crypto Foundation, it follows blockchain tenets: decentralization, transparency, counterparty risk resistance, P2P value exchange, and self-custody.</p>
+                <p><strong>Problem Solved:</strong> XEN addresses the bipolar crypto market—overbought known coins and undiscovered, pre-mined unknowns—via a fair launch with no insider advantages (p. 2).</p>
             </section>
             <section id="tokenomics">
                 <h2>Tokenomics and Philosophy</h2>
-                <p><strong>What makes XEN unique?</strong> Simplicity - XEN is based on the ERC20 token standard with a minimum amount of code...</p>
+                <p><strong>Uniqueness:</strong> XEN is an ERC-20 token with minimal code, no pre-minting, admin keys, or origin wallets. It starts at zero supply, minted by participants using Ethereum-compatible wallets (e.g., MetaMask) for free (p. 3).</p>
+                <p><strong>Supply Dynamics:</strong> No max cap; inflationary initially, becoming disinflationary as adoption grows logarithmically (p. 4). Value ties to minting difficulty, akin to Bitcoin, driven by market forces (p. 5).</p>
+                <p><strong>Proof of Participation (PoP):</strong> Not PoW or PoS, XEN rewards participation. Rewards use the formula: \( R_u = \log_2(cR_G - cR_u) * T * AMP(t s_G) * (1 + EAA(cR_u)) \), where \( cR_G \) is global rank, \( cR_u \) is user rank, \( T \) is term (days), \( AMP \) decreases from 3,000 daily, and \( EAA \) starts at 10%, dropping 0.1% per 100,000 ranks (p. 5-6).</p>
             </section>
             <section id="minting">
                 <h2>Minting XEN</h2>
-                <p><strong>What is the process to mint XEN?</strong> You will be able to visit XEN's web3 panel...</p>
-                <p><strong>Formula:</strong> \( R_u = \log_2(cR_G - cR_u) * T * AMP(t s_G) * (1 + EAA(cR_u)) \)</p>
+                <p><strong>Process:</strong> Connect a wallet, claim a CryptoRank (\( cR_u \)) via `claimRank(term)`, specifying a term (1 to freeMintTermLimit days). After the term, use `claimMintReward()` within a 7-day window or face penalties (0% day 0, 99% day 7+) (p. 7-8, 13).</p>
+                <p><strong>Formula:</strong> \( R_u = \log_2(cR_G - cR_u) * T * AMP(t s_G) * (1 + EAA(cR_u)) \). FreeMintTerm starts at 100 days, increasing as \( 100 + \log_2(cR_G) * 15 \) after 5,000 participants (p. 7).</p>
                 <div id="mint-action" class="action-box hidden">
                     <input type="number" id="mint-term" min="1" max="100" value="1" placeholder="Term (days)">
                     <button id="claim-rank">Claim Rank</button>
@@ -37,7 +40,7 @@
             </section>
             <section id="staking">
                 <h2>Staking XEN</h2>
-                <p><strong>Staking Period:</strong> Limited to 1 to 1,000 days...</p>
+                <p><strong>Process:</strong> Stake via `stake(amount, term)` (1-1,000 days). APY starts at 20%, drops 1% every 90 days to 2% (fixed at stake time). Rewards: \( R_u = \frac{S_u * APY * \tau}{100 * 365} \). Early withdrawal returns stake sans rewards; post-maturity includes APY (p. 8-9, 14).</p>
                 <div id="stake-action" class="action-box hidden">
                     <input type="number" id="stake-amount" min="1" placeholder="Amount">
                     <input type="number" id="stake-term" min="1" max="1000" value="1" placeholder="Term (days)">
@@ -47,7 +50,12 @@
             </section>
             <section id="tech">
                 <h2>Technology</h2>
-                <p><strong>Does XEN run on its own blockchain?</strong> No, XEN is deployed on the Ethereum mainnet...</p>
+                <p><strong>Blockchain:</strong> XEN runs on Ethereum mainnet as an open-source ERC-20 token, leveraging its $570B peak market cap security (p. 10).</p>
+                <p><strong>First Principles:</strong> Inspired by crypto-anarchism and Bitcoin’s P2P ethos, XEN resists centralization trends (e.g., CBDCs, corporate crypto) with a trustless, immutable design (p. 11).</p>
+            </section>
+            <section id="cause">
+                <h2>The Cause</h2>
+                <p><strong>Vision:</strong> XEN revisits blockchain roots—consensus-driven, people-powered innovation—against a backdrop of centralized corruption in crypto (p. 11).</p>
             </section>
         </main>
     </div>
