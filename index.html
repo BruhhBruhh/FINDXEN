@@ -3,24 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FINDXEN</title>
+    <title>XEN Litepaper</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <nav class="sidebar">
-            <h2>FIDXEN</h2>
-            <ul>
-                <li><a href="#general">General</a></li>
-                <li><a href="#tokenomics">Tokenomics</a></li>
-                <li><a href="#minting">Minting</a></li>
-                <li><a href="#staking">Staking</a></li>
-                <li><a href="#tech">Technology</a></li>
-            </ul>
-        </nav>
-        <main class="content">
+        <header>
+            <h1>XEN</h1>
+            <button id="connect-wallet">Connect Wallet</button>
+            <p id="wallet-address"></p>
+        </header>
+        <main id="content">
             <section id="general">
-                <h1>XEN - CryptoCurrency For the Masses</h1>
                 <h2>General</h2>
                 <p><strong>What is the mission of XEN?</strong> XEN aims to become a community-building crypto asset that connects like-minded people together...</p>
                 <p><strong>What problem does XEN solve?</strong> Today's crypto world exists on a very bipolar plane...</p>
@@ -34,21 +29,20 @@
                 <p><strong>What is the process to mint XEN?</strong> You will be able to visit XEN's web3 panel...</p>
                 <p><strong>Formula:</strong> \( R_u = \log_2(cR_G - cR_u) * T * AMP(t s_G) * (1 + EAA(cR_u)) \)</p>
                 <div id="mint-action" class="action-box hidden">
-                    <p>Ready to mint? Set your term (days):</p>
-                    <input type="number" id="mint-term" min="1" max="100" value="1">
-                    <button onclick="simulateMint()">Mint XEN</button>
-                    <p id="mint-result"></p>
+                    <input type="number" id="mint-term" min="1" max="100" value="1" placeholder="Term (days)">
+                    <button id="claim-rank">Claim Rank</button>
+                    <button id="claim-mint">Claim Mint Reward</button>
+                    <p id="mint-status"></p>
                 </div>
             </section>
             <section id="staking">
                 <h2>Staking XEN</h2>
                 <p><strong>Staking Period:</strong> Limited to 1 to 1,000 days...</p>
                 <div id="stake-action" class="action-box hidden">
-                    <p>Stake your XEN:</p>
                     <input type="number" id="stake-amount" min="1" placeholder="Amount">
-                    <input type="number" id="stake-term" min="1" max="1000" value="1" placeholder="Days">
-                    <button onclick="simulateStake()">Stake XEN</button>
-                    <p id="stake-result"></p>
+                    <input type="number" id="stake-term" min="1" max="1000" value="1" placeholder="Term (days)">
+                    <button id="stake-xen">Stake XEN</button>
+                    <p id="stake-status"></p>
                 </div>
             </section>
             <section id="tech">
