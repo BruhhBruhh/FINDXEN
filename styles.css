@@ -1,13 +1,13 @@
 body {
     margin: 0;
-    font-family: 'Orbitron', sans-serif; /* Add via Google Fonts */
+    font-family: 'Orbitron', sans-serif;
     background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
     color: #fff;
     overflow-x: hidden;
 }
 
 .container {
-    max-width: 900px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
 }
@@ -65,6 +65,7 @@ h2 {
 
 p {
     line-height: 1.6;
+    font-size: 1.1em;
 }
 
 .action-box {
