@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: Montserrat, sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background: linear-gradient(135deg, #1a1a3a, #2d2d5f, #3a3a6f);
     color: #e0e0e0; /* Improved contrast */
     overflow-x: hidden;
