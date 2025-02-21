@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: 'Orbitron', sans-serif;
+    font-family: Montserrat, sans-serif;
     background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
     color: #e0e0e0; /* Lighter gray for better contrast */
     overflow-x: hidden;
