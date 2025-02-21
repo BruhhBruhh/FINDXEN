@@ -12,20 +12,36 @@ const XEN_ABI = [
 let web3, accounts, contract;
 
 async function initWeb3() {
+    const connectButton = document.getElementById('connect-wallet');
+    const walletStatus = document.getElementById('wallet-status');
+    const walletLoading = document.getElementById('wallet-loading');
+    
+    connectButton.disabled = true;
+    walletLoading.classList.remove('hidden');
+    walletStatus.innerText = '';
+
     if (window.ethereum) {
         web3 = new Web3(window.ethereum);
         try {
             accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            document.getElementById('wallet-address').innerText = `Connected: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`;
+            document.getElementById('wallet-status').innerText = `Connected: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`;
             contract = new web3.eth.Contract(XEN_ABI, XEN_CONTRACT_ADDRESS);
             updateTermLimit();
             updateUserStatus();
         } catch (error) {
             console.error("Wallet connection failed:", error);
-            document.getElementById('wallet-address').innerText = "Connection failed!";
+            walletStatus.innerText = "Connection failed! Please check MetaMask.";
+            if (error.code === 4001) {
+                walletStatus.innerText = "User rejected wallet connection.";
+            }
+        } finally {
+            connectButton.disabled = false;
+            walletLoading.classList.add('hidden');
         }
     } else {
-        alert("Please install MetaMask!");
+        walletStatus.innerText = "Please install MetaMask!";
+        connectButton.disabled = false;
+        walletLoading.classList.add('hidden');
     }
 }
 
@@ -79,7 +95,8 @@ document.addEventListener('scroll', () => {
         const section = document.getElementById(id);
         const actionBox = document.getElementById(`${id.split('ing')[0]}-action`);
         const rect = section.getBoundingClientRect();
-        if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+        // Ensure the section is in view (adjust threshold if needed)
+        if (rect.top >= -200 && rect.bottom <= window.innerHeight + 200) {
             actionBox.classList.remove('hidden');
         } else {
             actionBox.classList.add('hidden');
