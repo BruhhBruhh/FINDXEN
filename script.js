@@ -1,141 +1,114 @@
-// XEN Contract Details
-const XEN_CONTRACT_ADDRESS = "0x06450dEe7FD2Fb8E39061434BAbCFC05599a6Fb8"; // Replace if incorrect
+// Mock XEN contract details (replace with real addresses/ABI)
+const XEN_CONTRACT_ADDRESS = "0x06450dEe7FD2Fb8E39061434BAbCFC05599a6Fb8"; // Ethereum mainnet XEN address (placeholder)
 const XEN_ABI = [
-    {"inputs":[{"internalType":"uint256","name":"term","type":"uint256"}],"name":"claimRank","outputs":[],"stateMutability":"nonpayable","type":"function"},
-    {"inputs":[],"name":"claimMintReward","outputs":[],"stateMutability":"nonpayable","type":"function"},
-    {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"term","type":"uint256"}],"name":"stake","outputs":[],"stateMutability":"nonpayable","type":"function"},
-    {"inputs":[],"name":"getUserMint","outputs":[{"components":[{"internalType":"uint256","name":"cRank","type":"uint256"},{"internalType":"uint256","name":"term","type":"uint256"},{"internalType":"uint256","name":"maturityTs","type":"uint256"},{"internalType":"uint256","name":"amp","type":"uint256"}],"internalType":"struct XEN.MintInfo","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},
-    {"inputs":[],"name":"getUserStake","outputs":[{"components":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"term","type":"uint256"},{"internalType":"uint256","name":"maturityTs","type":"uint256"},{"internalType":"uint256","name":"apy","type":"uint256"}],"internalType":"struct XEN.StakeInfo","name":"","type":"tuple"}],"stateMutability":"view","type":"function"},
-    {"inputs":[],"name":"globalRank","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}
+    {
+        "inputs": [],
+        "name": "globalRank",
+        "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+        "stateMutability": "view",
+        "type": "function"
+    }
+    // Add other methods if needed
 ];
 
-let web3, accounts, contract;
+let web3, contract, totalRank = 0;
+
+// Simulated EVM chain IDs (13 EVMs: Ethereum, Polygon, Arbitrum, etc.)
+const evmChains = [
+    { name: "Ethereum", chainId: 1 },
+    { name: "Polygon", chainId: 137 },
+    { name: "Arbitrum", chainId: 42161 },
+    { name: "Optimism", chainId: 10 },
+    { name: "Avalanche", chainId: 43114 },
+    { name: "Fantom", chainId: 250 },
+    { name: "BSC", chainId: 56 },
+    { name: "Base", chainId: 8453 },
+    { name: "Pulsechain", chainId: 369 },
+    { name: "Linea", chainId: 59144 },
+    { name: "Scroll", chainId: 534352 },
+    { name: "Blast", chainId: 81457 },
+    { name: "Mantle", chainId: 5000 }
+];
 
 async function initWeb3() {
-    const connectButton = document.getElementById('connect-wallet');
-    const walletStatus = document.getElementById('wallet-status');
-    const walletLoading = document.getElementById('wallet-loading');
-    
-    connectButton.disabled = true;
-    walletLoading.classList.remove('hidden');
-    walletStatus.innerText = '';
-
     if (window.ethereum) {
         web3 = new Web3(window.ethereum);
         try {
-            accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            document.getElementById('wallet-status').innerText = `Connected: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`;
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
             contract = new web3.eth.Contract(XEN_ABI, XEN_CONTRACT_ADDRESS);
-            updateTermLimit();
-            updateUserStatus();
+            updateRank();
+            setInterval(updateRank, 5000); // Update every 5 seconds
         } catch (error) {
             console.error("Wallet connection failed:", error);
-            walletStatus.innerText = "Connection failed! Please check MetaMask.";
-            if (error.code === 4001) {
-                walletStatus.innerText = "User rejected wallet connection.";
-            }
-        } finally {
-            connectButton.disabled = false;
-            walletLoading.classList.add('hidden');
+            alert("Please connect MetaMask to view live ranks!");
         }
     } else {
-        walletStatus.innerText = "Please install MetaMask!";
-        connectButton.disabled = false;
-        walletLoading.classList.add('hidden');
+        alert("Please install MetaMask!");
     }
 }
 
-async function updateTermLimit() {
+async function updateRank() {
     try {
-        const globalRank = await contract.methods.globalRank().call();
-        const termLimit = globalRank <= 5000 ? 100 : 100 + Math.log2(globalRank) * 15;
-        document.getElementById('mint-term').max = Math.floor(termLimit);
+        let rankSum = 0;
+        for (const chain of evmChains) {
+            // Simulate switching chain or use multi-chain provider
+            await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: web3.utils.toHex(chain.chainId) }],
+            });
+            const rank = await contract.methods.globalRank().call();
+            rankSum += parseInt(rank); // Add rank from each EVM
+        }
+        // Reset to Ethereum mainnet (chainId 1)
+        await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: web3.utils.toHex(1) }],
+        });
+        totalRank = rankSum;
+        updateDisplay();
     } catch (error) {
-        console.error("Error fetching global rank:", error);
+        console.error("Error fetching ranks:", error);
+        document.getElementById('rank-counter').innerText = "Error";
     }
 }
 
-async function updateUserStatus() {
-    if (!contract || !accounts) return;
-    try {
-        const mintInfo = await contract.methods.getUserMint().call({ from: accounts[0] });
-        const stakeInfo = await contract.methods.getUserStake().call({ from: accounts[0] });
-        
-        const mintStatusBox = document.getElementById('mint-status-box');
-        if (mintInfo.maturityTs > 0) {
-            const now = Math.floor(Date.now() / 1000);
-            const daysLeft = Math.max(0, Math.ceil((mintInfo.maturityTs - now) / (24 * 3600)));
-            mintStatusBox.innerHTML = daysLeft > 0 
-                ? `Mint in Progress: ${daysLeft} days left (Term: ${mintInfo.term}, Rank: ${mintInfo.cRank})`
-                : `Mint Ready: Claim your reward! (Rank: ${mintInfo.cRank})`;
-        } else {
-            mintStatusBox.innerHTML = "No active mint.";
-        }
+function updateDisplay() {
+    const counter = document.getElementById('rank-counter');
+    let current = parseInt(counter.innerText.replace(/,/g, '')) || 0;
+    const target = totalRank;
+    const duration = 1000; // 1 second animation
+    const startTime = performance.now();
 
-        const stakeStatusBox = document.getElementById('stake-status-box');
-        if (stakeInfo.maturityTs > 0) {
-            const now = Math.floor(Date.now() / 1000);
-            const daysLeft = Math.max(0, Math.ceil((stakeInfo.maturityTs - now) / (24 * 3600)));
-            stakeStatusBox.innerHTML = daysLeft > 0 
-                ? `Stake Active: ${web3.utils.fromWei(stakeInfo.amount, 'ether')} XEN for ${daysLeft} days (APY: ${stakeInfo.apy / 100}%)`
-                : `Stake Mature: Withdraw ${web3.utils.fromWei(stakeInfo.amount, 'ether')} XEN + rewards!`;
+    function animate(time) {
+        const elapsed = time - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const newValue = Math.floor(current + (target - current) * progress);
+        counter.innerText = newValue.toLocaleString(); // Add commas for readability
+        if (progress < 1) {
+            requestAnimationFrame(animate);
         } else {
-            stakeStatusBox.innerHTML = "No active stake.";
+            counter.innerText = target.toLocaleString();
         }
-    } catch (error) {
-        console.error("Error fetching user status:", error);
     }
+    requestAnimationFrame(animate);
 }
 
-document.getElementById('connect-wallet').addEventListener('click', initWeb3);
-
-document.addEventListener('scroll', () => {
-    const sections = ['minting', 'staking'];
-    sections.forEach(id => {
-        const section = document.getElementById(id);
-        const actionBox = document.getElementById(`${id.split('ing')[0]}-action`);
-        const rect = section.getBoundingClientRect();
-        // Ensure the section is in view (adjust threshold if needed)
-        if (rect.top >= -200 && rect.bottom <= window.innerHeight + 200) {
-            actionBox.classList.remove('hidden');
-        } else {
-            actionBox.classList.add('hidden');
-        }
-    });
-});
-
-document.getElementById('claim-rank').addEventListener('click', async () => {
-    if (!contract) return alert("Please connect your wallet!");
-    const term = document.getElementById('mint-term').value;
-    try {
-        await contract.methods.claimRank(term).send({ from: accounts[0] });
-        document.getElementById('mint-status').innerText = `Rank claimed for ${term} days!`;
-        updateUserStatus();
-    } catch (error) {
-        document.getElementById('mint-status').innerText = `Error: ${error.message}`;
+// Add Matrix rain effect (optional)
+function createMatrixRain() {
+    const rain = document.createElement('div');
+    rain.className = 'matrix-rain';
+    for (let i = 0; i < 100; i++) {
+        const span = document.createElement('span');
+        span.innerText = String.fromCharCode(65 + Math.random() * 57); // Random characters
+        span.style.left = Math.random() * 100 + 'vw';
+        span.style.animationDelay = Math.random() * 5 + 's';
+        span.style.animationDuration = Math.random() * 5 + 5 + 's';
+        rain.appendChild(span);
     }
-});
+    document.body.appendChild(rain);
+}
 
-document.getElementById('claim-mint').addEventListener('click', async () => {
-    if (!contract) return alert("Please connect your wallet!");
-    try {
-        await contract.methods.claimMintReward().send({ from: accounts[0] });
-        document.getElementById('mint-status').innerText = "XEN minted successfully!";
-        updateUserStatus();
-    } catch (error) {
-        document.getElementById('mint-status').innerText = `Error: ${error.message}`;
-    }
-});
-
-document.getElementById('stake-xen').addEventListener('click', async () => {
-    if (!contract) return alert("Please connect your wallet!");
-    const amount = document.getElementById('stake-amount').value;
-    const term = document.getElementById('stake-term').value;
-    try {
-        await contract.methods.stake(web3.utils.toWei(amount, 'ether'), term).send({ from: accounts[0] });
-        document.getElementById('stake-status').innerText = `Staked ${amount} XEN for ${term} days!`;
-        updateUserStatus();
-    } catch (error) {
-        document.getElementById('stake-status').innerText = `Error: ${error.message}`;
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    initWeb3();
+    createMatrixRain();
 });
