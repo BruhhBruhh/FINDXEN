@@ -15,35 +15,14 @@
             <button id="connect-wallet">Connect Wallet</button>
             <p id="wallet-address"></p>
         </header>
+        
         <main id="content">
+            
             <section id="general">
                 <h2>FIND XEN</h2>
-                
-                /*
-
-        \\      //   |||||||||||   |\      ||       A CRYPTOCURRENCY FOR THE MASSES
-         \\    //    ||            |\\     ||
-          \\  //     ||            ||\\    ||       PRINCIPLES OF XEN:
-           \\//      ||            || \\   ||       - No pre-mint; starts with zero supply
-            XX       ||||||||      ||  \\  ||       - No admin keys
-           //\\      ||            ||   \\ ||       - Immutable contract
-          //  \\     ||            ||    \\||
-         //    \\    ||            ||     \\|
-        //      \\   |||||||||||   ||      \|       Copyright (C) FairCrypto Foundation 2022
-
-
-    XENFT XEN Torrent props:
-    - count: number of VMUs
-    - mintInfo: (term, maturityTs, cRank start, AMP,  EAA, apex, limited, group, redeemed)
- */
             </section>
-            <section id="tokenomics">
-                <h2>Tokenomics and Philosophy</h2>
-                <p><strong>Uniqueness:</strong> XEN is an ERC-20 token with minimal code, no pre-minting, admin keys, or origin wallets. It starts at zero supply, minted freely via Ethereum-compatible wallets (e.g., MetaMask) (p. 3).</p>
-                <p><strong>Supply Dynamics:</strong> No max cap; inflationary initially, turning disinflationary as adoption grows logarithmically. Value ties to minting difficulty, akin to Bitcoin (p. 4-5).</p>
-                <p><strong>Proof of Participation (PoP):</strong> Rewards use \( R_u = \log_2(cR_G - cR_u) * T * AMP(t s_G) * (1 + EAA(cR_u)) \), where \( cR_G \) is global rank, \( cR_u \) is user rank, \( T \) is term, \( AMP \) drops from 3,000 daily, and \( EAA \) starts at 10%, decreasing 0.1% per 100,000 ranks (p. 5-6).</p>
-            </section>
-            <section id="minting">
+            
+        <section id="minting">
                 <h2>Minting XEN</h2>
                 <p><strong>Process:</strong> Claim a CryptoRank (\( cR_u \)) via `claimRank(term)` (1 to freeMintTermLimit days). Post-term, claim via `claimMintReward()` within 7 days or face penalties (0% day 0, 99% day 7+) (p. 7-8, 13).</p>
                 <p><strong>Formula:</strong> \( R_u = \log_2(cR_G - cR_u) * T * AMP(t s_G) * (1 + EAA(cR_u)) \). FreeMintTerm starts at 100 days, increasing as \( 100 + \log_2(cR_G) * 15 \) after 5,000 participants (p. 7).</p>
@@ -55,6 +34,7 @@
                     <p id="mint-status"></p>
                 </div>
             </section>
+
             <section id="staking">
                 <h2>Staking XEN</h2>
                 <p><strong>Process:</strong> Stake via `stake(amount, term)` (1-1,000 days). APY starts at 20%, drops 1% every 90 days to 2%. Rewards: \( R_u = \frac{S_u * APY * \tau}{100 * 365} \). Early withdrawal returns stake only; post-maturity includes APY (p. 8-9, 14).</p>
@@ -66,11 +46,13 @@
                     <p id="stake-status"></p>
                 </div>
             </section>
+            
             <section id="tech">
                 <h2>Technology</h2>
                 <p><strong>Blockchain:</strong> XEN runs on Ethereum mainnet as an ERC-20 token, leveraging its $570B peak market cap security (p. 10).</p>
                 <p><strong>First Principles:</strong> Inspired by crypto-anarchism and Bitcoin’s P2P ethos, XEN resists centralization trends (e.g., CBDCs) with a trustless design (p. 11).</p>
             </section>
+            
             <section id="cause">
                 <h2>The Cause</h2>
                 <p><strong>Vision:</strong> XEN revisits blockchain’s roots—consensus-driven, people-powered—against centralized corruption in crypto (p. 11).</p>
