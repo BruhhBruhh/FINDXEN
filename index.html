@@ -3,36 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XEN Crypto - About</title>
+    <title>XEN Crypto - Powered by xen.network</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="https://xen.network" class="logo">XEN Crypto</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><button id="mint-btn">Mint XEN</button></li>
+                <li><button id="stake-btn">Stake XEN</button></li>
+            </ul>
+        </div>
+    </nav>
     <div class="container">
-        <div class="blurb" id="blurb1">
-            <h2>Our Purpose</h2>
-            <p>XEN Crypto is built for anyone to join, connecting people through a fair, community-driven token.</p>
-            <p>The Fair Crypto Foundation designed it to echo blockchain’s roots—decentralized, transparent, and self-owned.</p>
-        </div>
-        <div class="blurb" id="blurb2">
-            <h2>How It Works</h2>
-            <p>XEN starts with no supply; you mint it using an Ethereum wallet under a Proof of Participation model.</p>
-            <p>Rewards shrink as participation grows, shifting it from inflationary to scarcer over time.</p>
-        </div>
-        <div class="blurb" id="blurb3">
-            <h2>Straightforward Design</h2>
-            <p>Running on Ethereum as an ERC-20 token, XEN’s open-source code has no central control or pre-mints.</p>
-            <p>You connect a wallet, set a wait period, and mint it—that’s the deal.</p>
-        </div>
-        <div class="blurb" id="blurb4">
-            <h2>Minting & Staking</h2>
-            <p>Rewards follow <em>R<sub>u</sub> = log₂(cR<sub>G</sub> - cR<sub>u</sub>) × T × AMP(t<sub>sG</sub>) × (1 + EAA(cR<sub>u</sub>))</em>, based on your rank, wait days (T), and declining amplifiers.</p>
-            <p>Stake for 1–1,000 days with APY from 20% down to 2%, but claim late and lose up to 99%.</p>
-        </div>
-        <div class="blurb" id="blurb5">
-            <h2>Community Power</h2>
-            <p>XEN gains value as more people mint and trade it on platforms like Uniswap.</p>
-            <p>It’s yours to use, share, or hold, driven by collective adoption.</p>
-        </div>
+        <section class="blurb" id="blurb1">
+            <div class="content">
+                <h2>Our Purpose</h2>
+                <p>XEN Crypto is built for anyone to join, connecting people through a fair, community-driven token.</p>
+                <p>The Fair Crypto Foundation designed it to echo blockchain’s roots—decentralized, transparent, and self-owned.</p>
+            </div>
+        </section>
+        <section class="blurb" id="blurb2">
+            <div class="content">
+                <h2>How It Works</h2>
+                <p>XEN starts with no supply; you mint it using an Ethereum wallet under a Proof of Participation model.</p>
+                <p>Rewards shrink as participation grows, shifting it from inflationary to scarcer over time.</p>
+            </div>
+        </section>
+        <section class="blurb" id="blurb3">
+            <div class="content">
+                <h2>Straightforward Design</h2>
+                <p>Running on Ethereum as an ERC-20 token, XEN’s open-source code has no central control or pre-mints.</p>
+                <p>You connect a wallet, set a wait period, and mint it—that’s the deal.</p>
+            </div>
+        </section>
+        <section class="blurb" id="blurb4">
+            <div class="content">
+                <h2>Minting & Staking</h2>
+                <p>Rewards follow <em>R<sub>u</sub> = log₂(cR<sub>G</sub> - cR<sub>u</sub>) × T × AMP(t<sub>sG</sub>) × (1 + EAA(cR<sub>u</sub>))</em>, based on your rank, wait days (T), and declining amplifiers.</p>
+                <p>Stake for 1–1,000 days with APY from 20% down to 2%, but claim late and lose up to 99%.</p>
+            </div>
+        </section>
+        <section class="blurb" id="blurb5">
+            <div class="content">
+                <h2>Community Power</h2>
+                <p>XEN gains value as more people mint and trade it on platforms like Uniswap.</p>
+                <p>It’s yours to use, share, or hold, driven by collective adoption.</p>
+            </div>
+        </section>
     </div>
     <script src="script.js"></script>
 </body>
