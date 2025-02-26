@@ -12,18 +12,84 @@ body {
     overflow-x: hidden;
 }
 
+/* Navigation Bar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(20, 10, 40, 0.95);
+    border-bottom: 1px solid #6a00ff;
+    z-index: 1000;
+    box-shadow: 0 0 15px rgba(106, 0, 255, 0.3);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #ffcc00;
+    font-size: 1.8rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links li {
+    margin-left: 30px;
+}
+
+.nav-links a, .nav-links button {
+    color: #d0c4ff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+.nav-links button {
+    background: #6a00ff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-links a:hover, .nav-links button:hover {
+    color: #ffcc00;
+    text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+}
+
+.nav-links button:hover {
+    background: #8a00ff;
+}
+
+/* Main Content */
 .container {
     width: 100%;
-    min-height: 100vh; /* Ensure container fills viewport */
+    padding-top: 80px; /* Offset for fixed navbar */
 }
 
 .blurb {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Full viewport height */
+    min-height: 100vh;
     background: rgba(20, 10, 40, 0.85);
-    border-bottom: 2px solid #6a00ff; /* Neon purple separator */
+    border-bottom: 2px solid #6a00ff;
     position: relative;
     overflow: hidden;
     opacity: 0;
@@ -36,7 +102,6 @@ body {
     transform: translateY(0);
 }
 
-/* Cool layered background effect */
 .blurb::before {
     content: '';
     position: absolute;
@@ -52,9 +117,9 @@ body {
 .content {
     position: relative;
     z-index: 1;
-    max-width: 800px;
+    max-width: 900px;
     padding: 40px;
-    background: rgba(0, 0, 0, 0.3); /* Slight overlay for depth */
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 15px;
     box-shadow: 0 0 25px rgba(106, 0, 255, 0.5);
     text-align: center;
@@ -82,22 +147,30 @@ p em {
     text-shadow: 0 0 5px rgba(0, 230, 230, 0.5);
 }
 
-/* Animation for background pulse */
 @keyframes pulse {
     0% { transform: scale(1); opacity: 0.5; }
     50% { transform: scale(1.1); opacity: 0.8; }
     100% { transform: scale(1); opacity: 0.5; }
 }
 
-/* Hover effect */
 .blurb:hover .content {
     box-shadow: 0 0 35px rgba(106, 0, 255, 0.7);
     transform: scale(1.02);
     transition: all 0.3s ease;
 }
 
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 768px) {
+    .nav-container {
+        flex-direction: column;
+        padding: 10px;
+    }
+    .nav-links {
+        margin-top: 10px;
+    }
+    .nav-links li {
+        margin: 0 10px;
+    }
     .content {
         padding: 20px;
     }
@@ -110,6 +183,9 @@ p em {
 }
 
 @media (max-width: 480px) {
+    .nav-links button {
+        padding: 8px 15px;
+    }
     h2 {
         font-size: 1.6rem;
     }
