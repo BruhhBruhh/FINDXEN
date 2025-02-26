@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mint XEN - XEN Crypto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="https://xen.network" class="logo">XEN Crypto</a>
+            <ul class="nav-links">
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="mint.html">Mint XEN</a></li>
+                <li><a href="stake.html">Stake XEN</a></li>
+                <li><button id="connect-wallet-btn">Connect Wallet</button></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="page-container">
+        <div class="content">
+            <h1>Mint Your XEN</h1>
+            <div id="mint-status">
+                <p>Connect your wallet to see your mint status.</p>
+            </div>
+            <div class="action-box">
+                <label for="mint-term">Mint Term (days, 1-1000):</label>
+                <input type="number" id="mint-term" min="1" max="1000" placeholder="Enter term">
+                <button id="start-mint-btn" disabled>Start Mint</button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script>
+    <script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
