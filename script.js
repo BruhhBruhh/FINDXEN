@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     handleScroll();
 });
 
-// Web3 Integration with WalletConnect and Ethers.js
+// Web3 Integration with MetaMask and Ethers.js
 let provider, signer, xenContract;
 const XEN_CONTRACT_ADDRESS = '0x06450dEe7FD2Fb8E39061434BAbCFC05599a6Fb8'; // Mainnet XEN address
 const XEN_ABI = [
@@ -41,34 +41,35 @@ const XEN_ABI = [
 ];
 
 async function connectWallet() {
-    const walletConnectProvider = new WalletConnectProvider({
-        infuraId: 'YOUR_INFURA_ID', // Replace with your Infura ID or use another RPC
-    });
+    if (typeof window.ethereum !== 'undefined') {
+        try {
+            // Request account access from MetaMask
+            await window.ethereum.request({ method: 'eth_requestAccounts' });
+            provider = new ethers.providers.Web3Provider(window.ethereum);
+            signer = provider.getSigner();
+            xenContract = new ethers.Contract(XEN_CONTRACT_ADDRESS, XEN_ABI, signer);
 
-    try {
-        await walletConnectProvider.enable();
-        provider = new ethers.providers.Web3Provider(walletConnectProvider);
-        signer = provider.getSigner();
-        xenContract = new ethers.Contract(XEN_CONTRACT_ADDRESS, XEN_ABI, signer);
+            const connectBtn = document.getElementById('connect-wallet-btn');
+            connectBtn.textContent = 'Wallet Connected';
+            connectBtn.disabled = true;
 
-        const connectBtn = document.getElementById('connect-wallet-btn');
-        connectBtn.textContent = 'Wallet Connected';
-        connectBtn.disabled = true;
+            // Enable buttons and check status
+            if (document.getElementById('start-mint-btn')) {
+                document.getElementById('start-mint-btn').disabled = false;
+                await checkMintStatus();
+            }
+            if (document.getElementById('start-stake-btn')) {
+                document.getElementById('start-stake-btn').disabled = false;
+                await checkStakeStatus();
+            }
 
-        // Enable buttons and check status
-        if (document.getElementById('start-mint-btn')) {
-            document.getElementById('start-mint-btn').disabled = false;
-            await checkMintStatus();
+            alert('MetaMask wallet connected successfully!');
+        } catch (error) {
+            console.error('MetaMask connection failed:', error);
+            alert('Failed to connect MetaMask: ' + error.message);
         }
-        if (document.getElementById('start-stake-btn')) {
-            document.getElementById('start-stake-btn').disabled = false;
-            await checkStakeStatus();
-        }
-
-        alert('Wallet connected successfully!');
-    } catch (error) {
-        console.error('Wallet connection failed:', error);
-        alert('Failed to connect wallet: ' + error.message);
+    } else {
+        alert('Please install MetaMask to use this feature!');
     }
 }
 
@@ -122,7 +123,7 @@ async function checkStakeStatus() {
         statusDiv.innerHTML = '<p>No stake in progress.</p>';
     } else {
         const maturityDate = new Date(stakeInfo.maturityTs.toNumber() * 1000);
-        const now = new Date();
+        const now = Date.now();
         const status = now < maturityDate ? 'In Progress' : 'Ready to Withdraw';
         statusDiv.innerHTML = `
             <p>Stake Status: ${status}</p>
