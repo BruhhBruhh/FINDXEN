@@ -1,171 +1,76 @@
-body {
+/* Modern XENFT APEX-inspired styling */
+* {
     margin: 0;
-    font-family: 'Orbitron', sans-serif;
-    background: linear-gradient(135deg, #1a1a3a, #2d2d5f, #3a3a6f);
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Orbitron', sans-serif; /* Futuristic font */
+    background: linear-gradient(135deg, #1a0b2e 0%, #2e1a47 100%); /* Deep purple gradient */
     color: #e0e0e0;
+    line-height: 1.6;
     overflow-x: hidden;
 }
 
-.matrix-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background: #000;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 20;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-}
-
-.digital-clock {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #0f0;
-    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-    letter-spacing: 2px;
-    animation: flicker 2s infinite alternate;
-}
-
-.rank-subtitle {
-    font-size: 1rem;
-    margin-top: 5px;
-    color: #0f0;
-    opacity: 0.7;
-}
-
 .container {
-    max-width: 1000px;
-    margin: 100px auto 0; /* Adjust for matrix container */
-    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
 }
 
-header {
-    position: sticky;
-    top: 100px; /* Below matrix container */
-    background: rgba(0, 0, 0, 0.9);
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 10;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+.blurb {
+    background: rgba(20, 10, 40, 0.9); /* Semi-transparent dark purple */
+    border: 1px solid #6a00ff; /* Neon purple edge */
+    padding: 25px;
+    margin: 30px 0;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(106, 0, 255, 0.3); /* Glowing effect */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-h1 {
-    font-size: 2.5em;
-    background: linear-gradient(to right, #00ffcc, #ff00cc);
-    -webkit-background-clip: text;
-    color: transparent;
-    text-align: center;
-    margin: 0;
-}
-
-.wallet-connect {
-    text-align: center;
-}
-
-button {
-    background: linear-gradient(45deg, #ff00cc, #00ffcc);
-    border: none;
-    padding: 10px 20px;
-    color: #fff;
-    font-size: 1em;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: transform 0.2s, background 0.3s;
-}
-
-button:hover {
-    transform: scale(1.05);
-    background: linear-gradient(45deg, #ff00ff, #00ffff);
-}
-
-#wallet-status, #wallet-loading {
-    margin-top: 10px;
-    font-size: 0.9em;
-    color: #b0b0b0;
-}
-
-.loading {
-    display: none;
-}
-
-.loading.visible {
-    display: block;
-}
-
-#content {
-    padding: 40px 0;
-}
-
-section {
-    margin-bottom: 40px;
-    padding: 20px;
-    background: rgba(40, 40, 60, 0.8);
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    scroll-margin-top: 100px;
-    transition: opacity 0.5s;
-    text-align: center;
+.blurb.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 h2 {
-    font-size: 2em;
-    color: #00ffcc;
-    margin-bottom: 15px;
+    color: #ffcc00; /* Gold accent from APEX */
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 p {
-    line-height: 1.6;
-    font-size: 1.1em;
-    max-width: 800px;
-    margin: 0 auto;
-    color: #d0d0d0;
+    font-size: 1.1rem;
+    color: #d0c4ff; /* Light purple text */
 }
 
-.action-box, .status-box {
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(50, 50, 70, 0.8);
-    border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
+p em {
+    color: #00e6e6; /* Neon teal for the formula */
+    font-style: normal;
+    font-weight: bold;
 }
 
-.action-box.hidden {
-    display: none;
+/* Subtle hover effect */
+.blurb:hover {
+    box-shadow: 0 0 20px rgba(106, 0, 255, 0.5);
+    transform: translateY(-5px); /* Slight lift */
 }
 
-input {
-    padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #00ffcc;
-    background: rgba(0, 0, 0, 0.3);
-    color: #fff;
-    border-radius: 5px;
-    font-family: 'Orbitron', sans-serif;
-}
-
-@media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        text-align: center;
-    }
-    button {
-        margin-top: 10px;
-    }
-    .container {
-        padding: 10px;
-    }
-    section {
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    .blurb {
         padding: 15px;
+        margin: 20px 10px;
     }
-    .digital-clock {
-        font-size: 2rem;
+    h2 {
+        font-size: 1.5rem;
+    }
+    p {
+        font-size: 1rem;
     }
 }
