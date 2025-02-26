@@ -55,7 +55,7 @@ body {
     color: #d0c4ff;
     text-decoration: none;
     font-size: 1.1rem;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, background 0.3s ease;
 }
 
 .nav-links button {
@@ -68,19 +68,25 @@ body {
     letter-spacing: 1px;
 }
 
-.nav-links a:hover, .nav-links button:hover {
+.nav-links button:disabled {
+    background: #4a007f;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.nav-links a:hover, .nav-links button:not(:disabled):hover {
     color: #ffcc00;
     text-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
 }
 
-.nav-links button:hover {
+.nav-links button:not(:disabled):hover {
     background: #8a00ff;
 }
 
-/* Main Content */
+/* Index Page Blurbs */
 .container {
     width: 100%;
-    padding-top: 80px; /* Offset for fixed navbar */
+    padding-top: 80px;
 }
 
 .blurb {
@@ -114,6 +120,16 @@ body {
     animation: pulse 6s infinite;
 }
 
+/* Mint and Stake Pages */
+.page-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding-top: 80px;
+    background: rgba(20, 10, 40, 0.85);
+}
+
 .content {
     position: relative;
     z-index: 1;
@@ -123,6 +139,15 @@ body {
     border-radius: 15px;
     box-shadow: 0 0 25px rgba(106, 0, 255, 0.5);
     text-align: center;
+}
+
+h1 {
+    color: #ffcc00;
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
 }
 
 h2 {
@@ -147,16 +172,56 @@ p em {
     text-shadow: 0 0 5px rgba(0, 230, 230, 0.5);
 }
 
+.action-box {
+    margin-top: 30px;
+}
+
+.action-box label {
+    display: block;
+    color: #d0c4ff;
+    font-size: 1.2rem;
+    margin: 10px 0 5px;
+}
+
+.action-box input {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #6a00ff;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+    font-size: 1.1rem;
+}
+
+.action-box button {
+    background: #6a00ff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    color: #e0e0e0;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.action-box button:disabled {
+    background: #4a007f;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.action-box button:not(:disabled):hover {
+    background: #8a00ff;
+}
+
 @keyframes pulse {
     0% { transform: scale(1); opacity: 0.5; }
     50% { transform: scale(1.1); opacity: 0.8; }
     100% { transform: scale(1); opacity: 0.5; }
-}
-
-.blurb:hover .content {
-    box-shadow: 0 0 35px rgba(106, 0, 255, 0.7);
-    transform: scale(1.02);
-    transition: all 0.3s ease;
 }
 
 /* Responsive */
@@ -174,7 +239,7 @@ p em {
     .content {
         padding: 20px;
     }
-    h2 {
+    h1, h2 {
         font-size: 2rem;
     }
     p {
@@ -186,10 +251,13 @@ p em {
     .nav-links button {
         padding: 8px 15px;
     }
-    h2 {
+    h1, h2 {
         font-size: 1.6rem;
     }
     p {
         font-size: 0.9rem;
+    }
+    .action-box input {
+        max-width: 200px;
     }
 }
