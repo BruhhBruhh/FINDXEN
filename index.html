@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XEN Crypto - Powered by xen.network</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <nav class="navbar">
@@ -13,8 +13,9 @@
             <a href="https://xen.network" class="logo">XEN Crypto</a>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
-                <li><button id="mint-btn">Mint XEN</button></li>
-                <li><button id="stake-btn">Stake XEN</button></li>
+                <li><a href="mint.html">Mint XEN</a></li>
+                <li><a href="stake.html">Stake XEN</a></li>
+                <li><button id="connect-wallet-btn">Connect Wallet</button></li>
             </ul>
         </div>
     </nav>
@@ -55,6 +56,8 @@
             </div>
         </section>
     </div>
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script>
+    <script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
